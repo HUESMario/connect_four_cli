@@ -5,6 +5,8 @@ from BColors import BColors
 
 class Game:
     def __init__(self, playground, players):
+        self.won_fields_x = [-1, -1, -1, -1]
+        self.won_fields_y = [-1, -1, -1, -1]
         self.playground = playground
         self.players.append(players[0])
         self.players.append(players[1])
@@ -42,36 +44,70 @@ class Game:
                 if self.playground.play_field[i][j].is_used():
                     if not j + 3 > len(self.playground.play_field[i]) - 1:
                         if self.playground.play_field[i][j].get_char() == self.playground.play_field[i][j + 1].get_char() and self.playground.play_field[i][j + 1].get_char() == self.playground.play_field[i][j + 2].get_char() and self.playground.play_field[i][j + 2].get_char() == self.playground.play_field[i][j + 3].get_char():
+                            print(1)
+                            self.won_fields_x[0] = i
+                            self.won_fields_x[1] = i
+                            self.won_fields_x[2] = i
+                            self.won_fields_x[3] = i
+                            self.won_fields_y[0] = j
+                            self.won_fields_y[1] = j + 1
+                            self.won_fields_y[2] = j + 2
+                            self.won_fields_y[3] = j + 3
                             if self.playground.play_field[i][j].get_char() == "X":
                                 self.game_won = 1
                             elif self.playground.play_field[i][j].get_char() == "O":
                                 self.game_won = 2
-                            return True
                     if not i + 3 > len(self.playground.play_field) - 1:
                         if self.playground.play_field[i][j].get_char() == self.playground.play_field[i + 1][j].get_char() and self.playground.play_field[i + 1][j].get_char() == self.playground.play_field[i + 2][j].get_char() and self.playground.play_field[i + 2][j].get_char() == self.playground.play_field[i + 3][j].get_char():
+                            print(2)
+                            self.won_fields_x[0] = i
+                            self.won_fields_x[1] = i + 1
+                            self.won_fields_x[2] = i + 2
+                            self.won_fields_x[3] = i + 3
+                            self.won_fields_y[0] = j
+                            self.won_fields_y[1] = j
+                            self.won_fields_y[2] = j
+                            self.won_fields_y[3] = j
                             if self.playground.play_field[i][j].get_char() == "X":
                                 self.game_won = 1
                             elif self.playground.play_field[i][j].get_char() == "O":
                                 self.game_won = 2
-                            return True
                     if not i + 3 > len(self.playground.play_field) - 1 and not j + 3 > len(self.playground.play_field[i]) - 1:
                         if self.playground.play_field[i][j].get_char() == self.playground.play_field[i + 1][j + 1].get_char() and self.playground.play_field[i + 1][j + 1].get_char() == self.playground.play_field[i + 2][j + 2].get_char() and self.playground.play_field[i + 2][j + 2].get_char() == self.playground.play_field[i + 3][j + 3].get_char():
+                            print(3)
+                            self.won_fields_x[0] = i
+                            self.won_fields_x[1] = i + 1
+                            self.won_fields_x[2] = i + 2
+                            self.won_fields_x[3] = i + 3
+                            self.won_fields_y[0] = j
+                            self.won_fields_y[1] = j + 1
+                            self.won_fields_y[2] = j + 2
+                            self.won_fields_y[3] = j + 3
                             if self.playground.play_field[i][j].get_char() == "X":
                                 self.game_won = 1
                             elif self.playground.play_field[i][j].get_char() == "O":
                                 self.game_won = 2
-                            return True
                     if not i + 3 > len(self.playground.play_field) - 1 and not j - 3 < 0:
                         if self.playground.play_field[i][j].get_char() == self.playground.play_field[i + 1][j - 1].get_char() and self.playground.play_field[i + 1][j - 1].get_char() == self.playground.play_field[i + 2][j - 2].get_char() and self.playground.play_field[i + 2][j - 2].get_char() == self.playground.play_field[i + 3][j - 3].get_char():
+                            print(4)
+                            self.won_fields_x[0] = i
+                            self.won_fields_x[1] = i + 1
+                            self.won_fields_x[2] = i + 2
+                            self.won_fields_x[3] = i + 3
+                            self.won_fields_y[0] = j
+                            self.won_fields_y[1] = j - 1
+                            self.won_fields_y[2] = j - 2
+                            self.won_fields_y[3] = j - 3
                             if self.playground.play_field[i][j].get_char() == "X":
                                 self.game_won = 1
                             elif self.playground.play_field[i][j].get_char() == "O":
                                 self.game_won = 2
-                            return True
+        if not self.game_won == 0:
+            return True
         return False
 
     def victory_screen(self):
-        print(self.playground.show_play_field())
+        print(self.playground.show_play_field(self.won_fields_x, self.won_fields_y))
         print(f"Congratulations to you {self.players[self.game_won - 1].get_name()}")
 
     def prompt_restart(self):
@@ -83,7 +119,7 @@ class Game:
     def play(self):
         while self.game_won == 0:
             self.show_current_player()
-            self.playground.show_play_field()
+            self.playground.show_play_field(self.won_fields_x, self.won_fields_y)
             self.player_action()
             self.check_for_win()
             if self.game_won != 0:
@@ -100,6 +136,8 @@ class Game:
             self.switch_players()
 
     playground = []
+    won_fields_x = [-1, -1, -1, -1]
+    won_fields_y = [-1, -1, -1, -1]
     players = []
     active_player = 1
     game_won = 0

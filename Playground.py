@@ -36,12 +36,21 @@ class Playground:
                 field_arr.append(new_field)
             self.play_field.append(field_arr)
 
-    def show_play_field(self):
+    def show_play_field(self, won_fields_x, won_fields_y):
         print(self.pf_color)
         print("-----------------------------")
         for i in range(5, -1, -1):
-            print(
-                f"| {self.play_field[i][0].get_color()}{self.play_field[i][0].get_char()}{self.pf_color} | {self.play_field[i][1].get_color()}{self.play_field[i][1].get_char()}{self.pf_color} | {self.play_field[i][2].get_color()}{self.play_field[i][2].get_char()}{self.pf_color} | {self.play_field[i][3].get_color()}{self.play_field[i][3].get_char()}{BColors.OKGREEN} | {self.play_field[i][4].get_color()}{self.play_field[i][4].get_char()}{BColors.OKGREEN} | {self.play_field[i][5].get_color()}{self.play_field[i][5].get_char()}{BColors.OKGREEN} | {self.play_field[i][6].get_color()}{self.play_field[i][6].get_char()}{BColors.OKGREEN} |")
+            color_set = []
+            for j in range(7):
+                won_field_found = False
+                for k in range(4):
+                    if i == won_fields_x[k] and j == won_fields_y[k]:
+                        color_set.append(BColors.OKCYAN)
+                        won_field_found = True
+
+                if not won_field_found:
+                    color_set.append(self.play_field[i][j].get_color())
+            print(f"| {color_set[0]}{self.play_field[i][0].get_char()}{self.pf_color} | {color_set[1]}{self.play_field[i][1].get_char()}{self.pf_color} | {color_set[2]}{self.play_field[i][2].get_char()}{self.pf_color} | {color_set[3]}{self.play_field[i][3].get_char()}{BColors.OKGREEN} | {color_set[4]}{self.play_field[i][4].get_char()}{BColors.OKGREEN} | {color_set[5]}{self.play_field[i][5].get_char()}{BColors.OKGREEN} | {color_set[6]}{self.play_field[i][6].get_char()}{BColors.OKGREEN} |")
         print("-----------------------------")
         print(BColors.ENDC)
 
