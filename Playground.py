@@ -37,6 +37,11 @@ class Playground:
             self.play_field.append(field_arr)
 
     def show_play_field(self, won_fields_x, won_fields_y):
+        from os import system, name
+
+        def clear():
+            system('cls' if name == 'nt' else 'clear')
+        clear()
         print(self.pf_color)
         print("-----------------------------")
         for i in range(5, -1, -1):
