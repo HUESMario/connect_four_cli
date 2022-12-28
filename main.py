@@ -1,3 +1,9 @@
+# Author: Mario Happle
+# Version: 1.0.0
+# Game Name: Connect_four_cli
+# Written with: PyCharm Community Edition 2022.2.2
+
+
 from Player import Player
 from Playground import Playground
 from Game import Game
