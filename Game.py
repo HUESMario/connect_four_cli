@@ -44,7 +44,6 @@ class Game:
                 if self.playground.play_field[i][j].is_used():
                     if not j + 3 > len(self.playground.play_field[i]) - 1:
                         if self.playground.play_field[i][j].get_char() == self.playground.play_field[i][j + 1].get_char() and self.playground.play_field[i][j + 1].get_char() == self.playground.play_field[i][j + 2].get_char() and self.playground.play_field[i][j + 2].get_char() == self.playground.play_field[i][j + 3].get_char():
-                            print(1)
                             self.won_fields_x[0] = i
                             self.won_fields_x[1] = i
                             self.won_fields_x[2] = i
@@ -59,7 +58,6 @@ class Game:
                                 self.game_won = 2
                     if not i + 3 > len(self.playground.play_field) - 1:
                         if self.playground.play_field[i][j].get_char() == self.playground.play_field[i + 1][j].get_char() and self.playground.play_field[i + 1][j].get_char() == self.playground.play_field[i + 2][j].get_char() and self.playground.play_field[i + 2][j].get_char() == self.playground.play_field[i + 3][j].get_char():
-                            print(2)
                             self.won_fields_x[0] = i
                             self.won_fields_x[1] = i + 1
                             self.won_fields_x[2] = i + 2
@@ -74,7 +72,6 @@ class Game:
                                 self.game_won = 2
                     if not i + 3 > len(self.playground.play_field) - 1 and not j + 3 > len(self.playground.play_field[i]) - 1:
                         if self.playground.play_field[i][j].get_char() == self.playground.play_field[i + 1][j + 1].get_char() and self.playground.play_field[i + 1][j + 1].get_char() == self.playground.play_field[i + 2][j + 2].get_char() and self.playground.play_field[i + 2][j + 2].get_char() == self.playground.play_field[i + 3][j + 3].get_char():
-                            print(3)
                             self.won_fields_x[0] = i
                             self.won_fields_x[1] = i + 1
                             self.won_fields_x[2] = i + 2
@@ -89,7 +86,6 @@ class Game:
                                 self.game_won = 2
                     if not i + 3 > len(self.playground.play_field) - 1 and not j - 3 < 0:
                         if self.playground.play_field[i][j].get_char() == self.playground.play_field[i + 1][j - 1].get_char() and self.playground.play_field[i + 1][j - 1].get_char() == self.playground.play_field[i + 2][j - 2].get_char() and self.playground.play_field[i + 2][j - 2].get_char() == self.playground.play_field[i + 3][j - 3].get_char():
-                            print(4)
                             self.won_fields_x[0] = i
                             self.won_fields_x[1] = i + 1
                             self.won_fields_x[2] = i + 2
@@ -116,6 +112,17 @@ class Game:
             return True
         return False
 
+    def field_full(self):
+        for i in range(len(self.playground.play_field)):
+            for j in range(len(self.playground.play_field[i])):
+                if not self.playground.play_field[i][j].is_used():
+                    return False
+        return True
+
+    def field_full_screen(self):
+        print(self.playground.show_play_field(self.won_fields_x, self.won_fields_y))
+        print("field is filled")
+
     def play(self):
         while self.game_won == 0:
             self.show_current_player()
@@ -133,6 +140,19 @@ class Game:
                     playground = Playground()
                     new_game = Game(playground, [player_1, player_2])
                     new_game.play()
+                break
+            if self.field_full():
+                self.field_full_screen()
+                if self.prompt_restart():
+                    del self.players[1]
+                    del self.players[0]
+                    del self.playground
+                    player_1 = Player(1)
+                    player_2 = Player(2)
+                    playground = Playground()
+                    new_game = Game(playground, [player_1, player_2])
+                    new_game.play()
+                break
             self.switch_players()
 
     playground = []

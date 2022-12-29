@@ -43,7 +43,6 @@ class Playground:
             system('cls' if name == 'nt' else 'clear')
         clear()
         print(self.pf_color)
-        print("-----------------------------")
         for i in range(5, -1, -1):
             color_set = []
             for j in range(7):
